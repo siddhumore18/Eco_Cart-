@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoCartbar</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .sidebar-collapsed {
+      width: 5rem !important;
+    }
+
+    .sidebar-expanded {
+      width: 16rem !important;
+    }
+
+    .content-expanded {
+      margin-left: 16rem !important;
+    }
+
+    .content-collapsed {
+      margin-left: 5rem !important;
+    }
+    
+    /* Base icon size for both desktop and mobile */
+    .sidebar-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    
+    /* Larger icons for mobile */
+    @media (max-width: 1023px) {
+      .sidebar-icon {
+        width: 2rem;
+        height: 2rem;
+      }
+      
+      .mobile-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+    
+    .search-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- Mobile Header -->
+  <div class="lg:hidden fixed top-0 left-0 right-0 bg-emerald-50 p-4 z-40 shadow-md flex justify-between items-center">
+    <div class="flex items-center gap-3 text-emerald-600">
+      <i class="fas fa-leaf fa-2x mobile-icon text-center"></i>
+      <span class="text-xl font-bold tracking-wide">EcoCart</span>
+    </div>
+    <button id="mobile-menu-button" class="text-emerald-600">
+      <i class="fas fa-bars mobile-icon"></i>
+    </button>
+  </div>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div id="sidebar"
+      class="fixed left-0 top-0 h-screen transition-all duration-300 bg-emerald-50 shadow-lg flex flex-col justify-between p-5 sidebar-expanded rounded-r-3xl z-50 lg:translate-x-0 -translate-x-full">
+      <!-- Top -->
+      <div>
+        <!-- Logo and toggle -->
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-3 text-emerald-600">
+            <i class="fas fa-leaf fa-2x mobile-icon text-center lg:sidebar-icon"></i>
+            <span class="text-xl font-bold tracking-wide sidebar-text">EcoCart</span>
+          </div>
+          <button id="desktop-toggle-button" class="text-emerald-600 hover:text-emerald-800 hidden lg:block">
+            <i id="toggle-icon" class="fas fa-chevron-left text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6 sidebar-search">
+          <div class="relative">
+            <input type="text" placeholder="Search..."
+              class="search-input w-full p-2 pl-10 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 border border-emerald-400" />
+            <i class="search-btn fas fa-search absolute left-2.5 top-5.8 text-black search-icon cursor-pointer"></i>
+          </div>
+        </div>
+        
+
+        <!-- Menu -->
+        <div>
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mb-4 px-3 sidebar-section">Main</h2>
+          <ul class="space-y-1">
+            <a href="home.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl bg-emerald-100 text-emerald-700 font-medium cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/cnpvyndp.json" trigger="morph" state="morph-home-2"
+                  class="sidebar-icon text-center text-emerald-600"></lord-icon>
+                <span class="sidebar-text">Home</span>
+              </li>
+            </a>
+
+            <a href="shop.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon> <span class="sidebar-text">Shop</span>
+              </li>
+            </a>
+
+            <a href="wishlist.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/xyboiuok.json" trigger="morph" state="morph-heart"
+                  colors="primary:#242424" class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Wishlist</span>
+              </li>
+            </a>
+
+            <a href="Blog.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/lyrrgrsl.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Blog</span>
+              </li>
+            </a>
+
+            <a href="team.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon
+    src="https://cdn.lordicon.com/bxdnmmpl.json"
+    trigger="hover"
+    class="sidebar-icon text-center text-emerald-600">
+</lord-icon>
+                <span class="sidebar-text">My Team</span>
+              </li>
+            </a>
+          </ul>
+
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mt-8 mb-4 px-3 sidebar-section">Account</h2>
+          <ul class="space-y-1">
+            <a href="account.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Account</span>
+              </li>
+            </a>
+
+            <a href="contact.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/rsvfayfn.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Contact Us</span>
+              </li>
+            </a>
+
+            <a href="help.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/axteoudt.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Help</span>
+              </li>
+            </a>
+
+            <a href="logout.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-red-700 cursor-pointer">
+                <i class="fas fa-sign-out-alt mt-3 sidebar-icon text-center text-red-600"></i>
+                <span class="sidebar-text">Logout</span>
+              </li>
+            </a>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Collapse Button (Mobile) -->
+      <div
+        class="lg:hidden absolute right-0 bottom-5 w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-md transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg -mr-4"
+        id="mobile-close-button">
+        <i class="fas fa-chevron-left text-emerald-600 text-xl"></i>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="transition-all duration-300 ease-in-out p-5 mt-16 lg:mt-0" id="main-content">
+        <!-- Add this section where you want the contact form to appear in your home.html -->
+<section class="container mx-auto px-4 my-16">
+    <!-- Contact Us Container -->
+    <div class="bg-emerald-50 rounded-3xl overflow-hidden shadow-lg">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+        <!-- Left Side - Contact Info -->
+        <div class="p-8 lg:p-12 bg-gradient-to-br from-emerald-100 to-emerald-200">
+          <h2 class="text-3xl font-bold text-emerald-800 mb-6">Get in Touch</h2>
+          
+          <div class="space-y-6">
+            <!-- Contact Info Item 1 -->
+            <div class="flex items-start gap-4">
+              <div class="bg-white p-3 rounded-xl shadow-sm">
+                <lord-icon
+                  src="https://cdn.lordicon.com/zzcjjxew.json"
+                  trigger="hover"
+                  colors="primary:#065f46"
+                  style="width:24px;height:24px">
+                </lord-icon>
+              </div>
+              <div>
+                <h3 class="font-semibold text-emerald-800">Email Us</h3>
+                <p class="text-emerald-600">support@EcoCart.com</p>
+              </div>
+            </div>
+            
+            <!-- Contact Info Item 2 -->
+            <div class="flex items-start gap-4">
+              <div class="bg-white p-3 rounded-xl shadow-sm">
+                <lord-icon
+                  src="https://cdn.lordicon.com/diihvcfp.json"
+                  trigger="hover"
+                  colors="primary:#065f46"
+                  style="width:24px;height:24px">
+                </lord-icon>
+              </div>
+              <div>
+                <h3 class="font-semibold text-emerald-800">Call Us</h3>
+                <p class="text-emerald-600">+1 (555) 123-4567</p>
+              </div>
+            </div>
+            
+            <!-- Contact Info Item 3 -->
+            <div class="flex items-start gap-4">
+              <div class="bg-white p-3 rounded-xl shadow-sm">
+                <lord-icon
+                  src="https://cdn.lordicon.com/osuxyevn.json"
+                  trigger="hover"
+                  colors="primary:#065f46"
+                  style="width:24px;height:24px">
+                </lord-icon>
+              </div>
+              <div>
+                <h3 class="font-semibold text-emerald-800">Visit Us</h3>
+                <p class="text-emerald-600">123 Green Street, Eco City</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Media Links -->
+          <div class="mt-10">
+            <h3 class="font-semibold text-emerald-800 mb-4">Follow Us</h3>
+            <div class="flex gap-4">
+              <a href="#" class="bg-white p-3 rounded-full shadow-sm hover:bg-emerald-100 transition">
+                <i class="fab fa-facebook-f text-emerald-600"></i>
+              </a>
+              <a href="#" class="bg-white p-3 rounded-full shadow-sm hover:bg-emerald-100 transition">
+                <i class="fab fa-twitter text-emerald-600"></i>
+              </a>
+              <a href="#" class="bg-white p-3 rounded-full shadow-sm hover:bg-emerald-100 transition">
+                <i class="fab fa-instagram text-emerald-600"></i>
+              </a>
+              <a href="#" class="bg-white p-3 rounded-full shadow-sm hover:bg-emerald-100 transition">
+                <i class="fab fa-linkedin-in text-emerald-600"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Side - Contact Form -->
+        <div class="p-8 lg:p-12 bg-white">
+          <h2 class="text-3xl font-bold text-emerald-800 mb-6">Send Us a Message</h2>
+          
+          <form class="space-y-5">
+            <!-- Name Field -->
+            <div>
+              <label for="name" class="block text-sm font-medium text-emerald-700 mb-1">Full Name</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <lord-icon
+                    src="https://cdn.lordicon.com/osuxyevn.json"
+                    trigger="hover"
+                    colors="primary:#065f46"
+                    style="width:20px;height:20px">
+                  </lord-icon>
+                </div>
+                <input type="text" id="name" 
+                  class="block w-full pl-10 pr-3 py-3 border border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500" 
+                  placeholder="Your name">
+              </div>
+            </div>
+            
+            <!-- Email Field -->
+            <div>
+              <label for="email" class="block text-sm font-medium text-emerald-700 mb-1">Email Address</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <lord-icon
+                    src="https://cdn.lordicon.com/zzcjjxew.json"
+                    trigger="hover"
+                    colors="primary:#065f46"
+                    style="width:20px;height:20px">
+                  </lord-icon>
+                </div>
+                <input type="email" id="email" 
+                  class="block w-full pl-10 pr-3 py-3 border border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500" 
+                  placeholder="your.email@example.com">
+              </div>
+            </div>
+            
+            <!-- Subject Field -->
+            <div>
+              <label for="subject" class="block text-sm font-medium text-emerald-700 mb-1">Subject</label>
+              <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <lord-icon
+                    src="https://cdn.lordicon.com/abfverha.json"
+                    trigger="hover"
+                    colors="primary:#065f46"
+                    style="width:20px;height:20px">
+                  </lord-icon>
+                </div>
+                <input type="text" id="subject" 
+                  class="block w-full pl-10 pr-3 py-3 border border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500" 
+                  placeholder="What's this about?">
+              </div>
+            </div>
+            
+            <!-- Message Field -->
+            <div>
+              <label for="message" class="block text-sm font-medium text-emerald-700 mb-1">Your Message</label>
+              <div class="relative">
+                <div class="absolute top-3 left-3">
+                  <lord-icon
+                    src="https://cdn.lordicon.com/nhfyhmlt.json"
+                    trigger="hover"
+                    colors="primary:#065f46"
+                    style="width:20px;height:20px">
+                  </lord-icon>
+                </div>
+                <textarea id="message" rows="4" 
+                  class="block w-full pl-10 pr-3 py-3 border border-emerald-300 rounded-xl focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500" 
+                  placeholder="Type your message here..."></textarea>
+              </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="pt-2">
+              <button type="submit" 
+                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-3 px-6 rounded-xl transition duration-300 flex items-center justify-center gap-2">
+                <lord-icon
+                  src="https://cdn.lordicon.com/zmkotitn.json"
+                  trigger="hover"
+                  colors="primary:#ffffff"
+                  style="width:20px;height:20px">
+                </lord-icon>
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+      
+    </div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window" class="fixed bottom-24 right-6 w-80 max-h-[500px] bg-white shadow-2xl border border-emerald-300 rounded-xl flex flex-col hidden z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center p-4 border-b border-emerald-100 bg-emerald-50 rounded-t-xl">
+    <div class="text-emerald-700 font-semibold text-lg"><i class="fas fa-robot mr-2"></i> Gemini AI</div>
+    <button id="chatbot-close" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 overflow-y-auto p-3 space-y-3 text-sm">
+    <div class="bg-emerald-50 p-2 rounded-md text-gray-800 max-w-[80%]">Hi there! How can I assist you today?</div>
+  </div>
+
+  <!-- Input -->
+  <div class="border-t border-emerald-100 p-2">
+    <div class="flex items-center gap-2">
+      <input id="chatbot-input" type="text" placeholder="Type a message..." class="flex-1 border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300" />
+      <button id="chatbot-send" class="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+  <script src="./home.js"></script>
+  <script src="./chatbot.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

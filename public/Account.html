@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoCart - My Account</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtT6yy_MVe5BUouOGALQtykPFpBRn6Kjs",
+      authDomain: "eco-cart2.firebaseapp.com",
+      projectId: "eco-cart2",
+      storageBucket: "eco-cart2.firebasestorage.app",
+      messagingSenderId: "346686441375",
+      appId: "1:346686441375:web:a310f6b3c450f28ecc9faa",
+      measurementId: "G-ZR943R24MF"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Check authentication state
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        await loadUserProfile(user);
+      } else {
+        window.location.href = 'Login.html';
+      }
+    });
+
+    // Load user profile data
+    async function loadUserProfile(user) {
+      try {
+        // Show loading state
+        document.getElementById('profileLoading').classList.remove('hidden');
+        document.getElementById('profileContent').classList.add('hidden');
+
+        // Get user document from Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          
+          // Update profile section
+          document.getElementById('profileName').textContent = userData.name || 'Not provided';
+          document.getElementById('profileEmail').textContent = userData.email || 'Not provided';
+          
+          // Update basic information
+          document.getElementById('fullName').textContent = userData.name || 'Not provided';
+          document.getElementById('emailAddress').textContent = userData.email || 'Not provided';
+          document.getElementById('phoneNumber').textContent = userData.phone || 'Not provided';
+          
+          // Format and display dates
+          if (userData.createdAt) {
+            const joinDate = userData.createdAt.toDate();
+            document.getElementById('memberSince').textContent = joinDate.toLocaleDateString();
+          } else {
+            document.getElementById('memberSince').textContent = 'Not available';
+          }
+          
+          if (userData.lastLogin) {
+            const lastLogin = userData.lastLogin.toDate();
+            document.getElementById('lastLogin').textContent = lastLogin.toLocaleString();
+          } else {
+            document.getElementById('lastLogin').textContent = 'Not available';
+          }
+          
+          // Update address information
+          document.getElementById('streetAddress').textContent = userData.address || 'Not provided';
+          document.getElementById('city').textContent = userData.city || 'Not provided';
+          document.getElementById('state').textContent = userData.state || 'Not provided';
+          document.getElementById('postalCode').textContent = userData.postalCode || 'Not provided';
+          
+          // Update account status
+          const statusElement = document.getElementById('accountStatus');
+          statusElement.textContent = userData.status || 'active';
+          statusElement.className = `px-2 py-1 rounded-full text-xs font-semibold ${
+            userData.status === 'active' ? 'bg-green-100 text-green-800' :
+            userData.status === 'inactive' ? 'bg-yellow-100 text-yellow-800' :
+            'bg-red-100 text-red-800'
+          }`;
+          
+          // Update notification preferences
+          const emailNotifications = document.getElementById('emailNotifications');
+          const smsNotifications = document.getElementById('smsNotifications');
+          
+          emailNotifications.className = `fas fa-${userData.preferences?.emailNotifications ? 'check-circle text-green-500' : 'times-circle text-red-500'} mr-2`;
+          smsNotifications.className = `fas fa-${userData.preferences?.smsNotifications ? 'check-circle text-green-500' : 'times-circle text-red-500'} mr-2`;
+          
+          // Update profile image if available
+          const profileImage = document.getElementById('profileImage');
+          if (userData.profileImage) {
+            profileImage.src = userData.profileImage;
+            profileImage.classList.remove('hidden');
+            document.getElementById('profilePlaceholder').classList.add('hidden');
+          } else {
+            profileImage.classList.add('hidden');
+            document.getElementById('profilePlaceholder').classList.remove('hidden');
+          }
+
+          // Show the content
+          document.getElementById('profileContent').classList.remove('hidden');
+        } else {
+          // Create new user document if it doesn't exist
+          await updateDoc(doc(db, "users", user.uid), {
+            name: user.displayName || '',
+            email: user.email,
+            phone: '',
+            address: '',
+            city: '',
+            state: '',
+            postalCode: '',
+            createdAt: new Date(),
+            lastLogin: new Date(),
+            status: 'active',
+            preferences: {
+              emailNotifications: true,
+              smsNotifications: true
+            },
+            profileImage: ''
+          });
+          
+          // Reload profile data
+          await loadUserProfile(user);
+        }
+      } catch (error) {
+        console.error('Error loading user profile:', error);
+        showError('Failed to load profile data. Please try again.');
+      } finally {
+        // Hide loading state
+        document.getElementById('profileLoading').classList.add('hidden');
+      }
+    }
+
+    // Handle logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        window.location.href = 'Login.html';
+      } catch (error) {
+        console.error('Error signing out:', error);
+        showError('Failed to sign out. Please try again.');
+      }
+    });
+
+    function showError(message) {
+      const errorDiv = document.getElementById('error-message');
+      errorDiv.textContent = message;
+      errorDiv.classList.remove('hidden');
+      setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+    }
+  </script>
+
+  <style>
+    .sidebar-collapsed {
+      width: 5rem !important;
+    }
+    .sidebar-expanded {
+      width: 16rem !important;
+    }
+    .content-expanded {
+      margin-left: 1rem !important;
+    }
+    .content-collapsed {
+      margin-left: 5rem !important;
+    }
+    .error-message {
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+  <div class="lg:hidden fixed top-0 left-0 right-0 bg-emerald-50 p-4 z-40 shadow-md flex justify-between items-center">
+    <div class="flex items-center gap-3 text-emerald-600">
+      <i class="fas fa-leaf fa-2x mobile-icon text-center"></i>
+      <span class="text-xl font-bold tracking-wide">EcoCart</span>
+    </div>
+    <button id="mobile-menu-button" class="text-emerald-600">
+      <i class="fas fa-bars mobile-icon"></i>
+    </button>
+  </div>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div id="sidebar"
+      class="fixed left-0 top-0 h-screen transition-all duration-300 bg-emerald-50 shadow-lg flex flex-col justify-between p-5 sidebar-expanded rounded-r-3xl z-50 lg:translate-x-0 -translate-x-full">
+      <!-- Top -->
+      <div>
+        <!-- Logo and toggle -->
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-3 text-emerald-600">
+            <i class="fas fa-leaf fa-2x mobile-icon text-center lg:sidebar-icon"></i>
+            <span class="text-xl font-bold tracking-wide sidebar-text">EcoCart</span>
+          </div>
+          <button id="desktop-toggle-button" class="text-emerald-600 hover:text-emerald-800 hidden lg:block">
+            <i id="toggle-icon" class="fas fa-chevron-left text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6 sidebar-search">
+          <div class="relative">
+            <input type="text" placeholder="Search..."
+              class="search-input w-full p-2 pl-10 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 border border-emerald-400" />
+            <i class="search-btn fas fa-search absolute left-2.5 top-5.8 text-black search-icon cursor-pointer"></i>
+          </div>
+        </div>
+        
+
+        <!-- Menu -->
+        <div>
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mb-4 px-3 sidebar-section">Main</h2>
+          <ul class="space-y-1">
+            <a href="home.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl bg-emerald-100 text-emerald-700 font-medium cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/cnpvyndp.json" trigger="morph" state="morph-home-2"
+                  class="sidebar-icon text-center text-emerald-600"></lord-icon>
+                <span class="sidebar-text">Home</span>
+              </li>
+            </a>
+
+            <a href="shop.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon> <span class="sidebar-text">Shop</span>
+              </li>
+            </a>
+
+            <a href="wishlist.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/xyboiuok.json" trigger="morph" state="morph-heart"
+                  colors="primary:#242424" class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Wishlist</span>
+              </li>
+            </a>
+
+            <a href="Blog.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/lyrrgrsl.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Blog</span>
+              </li>
+            </a>
+
+            <a href="team.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon
+    src="https://cdn.lordicon.com/bxdnmmpl.json"
+    trigger="hover"
+    class="sidebar-icon text-center text-emerald-600">
+</lord-icon>
+                <span class="sidebar-text">My Team</span>
+              </li>
+            </a>
+          </ul>
+
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mt-8 mb-4 px-3 sidebar-section">Account</h2>
+          <ul class="space-y-1">
+            <a href="account.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Account</span>
+              </li>
+            </a>
+
+            <a href="contact.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/rsvfayfn.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Contact Us</span>
+              </li>
+            </a>
+
+            <a href="help.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/axteoudt.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Help</span>
+              </li>
+            </a>
+
+            <a href="logout.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-red-700 cursor-pointer">
+                <i class="fas fa-sign-out-alt mt-3 sidebar-icon text-center text-red-600"></i>
+                <span class="sidebar-text">Logout</span>
+              </li>
+            </a>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Collapse Button (Mobile) -->
+      <div
+        class="lg:hidden absolute right-0 bottom-5 w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-md transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg -mr-4"
+        id="mobile-close-button">
+        <i class="fas fa-chevron-left text-emerald-600 text-xl"></i>
+      </div>
+    </div>
+
+    <!--=------------------------------------------------ Content ------------------------------------->
+    <div id="main-content" class="flex-1 ml-1 p-5 mt-16 transition-all duration-300 content-expanded">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">My Account</h1>
+        
+        <!-- Error Message -->
+        <div id="error-message" class="hidden error-message bg-red-100 text-red-700 p-3 rounded mb-4"></div>
+
+        <!-- Loading State -->
+        <div id="profileLoading" class="hidden text-center py-8">
+          <i class="fas fa-spinner fa-spin text-4xl text-emerald-600"></i>
+          <p class="mt-4 text-gray-600">Loading profile data...</p>
+        </div>
+
+        <!-- Profile Content -->
+        <div id="profileContent" class="hidden">
+          <!-- Profile Header -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex items-center">
+              <div id="profilePlaceholder" class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center">
+                <i class="fas fa-user text-3xl text-emerald-600"></i>
+              </div>
+              <img id="profileImage" src="" alt="Profile" class="hidden w-20 h-20 rounded-full object-cover">
+              <div class="ml-4">
+                <h1 id="profileName" class="text-2xl font-bold text-gray-800">Not provided</h1>
+                <p id="profileEmail" class="text-gray-600">Not provided</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Basic Information -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Basic Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-gray-600 mb-1">Full Name</label>
+                <p id="fullName" class="text-gray-800">Not provided</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">Email Address</label>
+                <p id="emailAddress" class="text-gray-800">Not provided</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">Phone Number</label>
+                <p id="phoneNumber" class="text-gray-800">Not provided</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">Member Since</label>
+                <p id="memberSince" class="text-gray-800">Not available</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">Last Login</label>
+                <p id="lastLogin" class="text-gray-800">Not available</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">Account Status</label>
+                <p id="accountStatus" class="inline-block px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Active</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Information -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Address Information</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-gray-600 mb-1">Street Address</label>
+                <p id="streetAddress" class="text-gray-800">Not provided</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">City</label>
+                <p id="city" class="text-gray-800">Not provided</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">State</label>
+                <p id="state" class="text-gray-800">Not provided</p>
+              </div>
+              <div>
+                <label class="block text-gray-600 mb-1">Postal Code</label>
+                <p id="postalCode" class="text-gray-800">Not provided</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Preferences -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Notification Preferences</h2>
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center">
+                <i id="emailNotifications" class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span class="text-gray-600">Email Notifications</span>
+              </div>
+              <div class="flex items-center">
+                <i id="smsNotifications" class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span class="text-gray-600">SMS Notifications</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Logout Button -->
+          <div class="text-center">
+            <button id="logoutBtn" 
+                    class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition">
+              <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Sidebar functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileToggleButton = document.getElementById('mobile-toggle-button');
+    const mobileCloseButton = document.getElementById('mobile-close-button');
+    const desktopToggleButton = document.getElementById('desktop-toggle-button');
+    const sidebar = document.getElementById('sidebar');
+    const toggleIcon = document.getElementById('toggle-icon');
+    const mainContent = document.getElementById('main-content');
+    
+    let isSidebarCollapsed = false;
+    let isMobile = window.innerWidth < 1024;
+
+    function initSidebar() {
+      isMobile = window.innerWidth < 1024;
+      if (isMobile) {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('sidebar-collapsed', 'sidebar-expanded');
+        mainContent.classList.remove('content-collapsed', 'content-expanded');
+      } else {
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('sidebar-expanded');
+        mainContent.classList.add('content-expanded');
+        toggleIcon.classList.remove('fa-chevron-right');
+        toggleIcon.classList.add('fa-chevron-left');
+      }
+    }
+
+    function toggleSidebar() {
+      if (!isMobile) {
+        isSidebarCollapsed = !isSidebarCollapsed;
+        if (isSidebarCollapsed) {
+          sidebar.classList.remove('sidebar-expanded');
+          sidebar.classList.add('sidebar-collapsed');
+          mainContent.classList.remove('content-expanded');
+          mainContent.classList.add('content-collapsed');
+          document.querySelectorAll('.sidebar-text, .sidebar-section, .sidebar-search').forEach(el => el.classList.add('hidden'));
+          toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+        } else {
+          sidebar.classList.remove('sidebar-collapsed');
+          sidebar.classList.add('sidebar-expanded');
+          mainContent.classList.remove('content-collapsed');
+          mainContent.classList.add('content-expanded');
+          document.querySelectorAll('.sidebar-text, .sidebar-section, .sidebar-search').forEach(el => el.classList.remove('hidden'));
+          toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+        }
+      } else {
+        sidebar.classList.toggle('-translate-x-full');
+      }
+    }
+
+    mobileMenuButton.addEventListener('click', toggleSidebar);
+    mobileToggleButton.addEventListener('click', toggleSidebar);
+    mobileCloseButton.addEventListener('click', toggleSidebar);
+    desktopToggleButton.addEventListener('click', toggleSidebar);
+
+    document.addEventListener('click', function(e) {
+      if (isMobile && 
+          !sidebar.contains(e.target) && 
+          !mobileMenuButton.contains(e.target) &&
+          !mobileToggleButton.contains(e.target) &&
+          !sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+
+    function handleResize() {
+      const wasMobile = isMobile;
+      isMobile = window.innerWidth < 1024;
+      if (wasMobile !== isMobile) initSidebar();
+    }
+
+    initSidebar();
+    window.addEventListener('resize', handleResize);
+  </script>
+
+
+<script src="chatbot.js"></script>
+<script src="./home.js"></script>
+
+<script src="script.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</body>
+</html> 

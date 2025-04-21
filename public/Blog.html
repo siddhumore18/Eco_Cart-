@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoCart - Blog</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+          },
+        }
+      }
+    }
+  </script>
+     <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    .sidebar-collapsed {
+      width: 5rem !important;
+    }
+    .sidebar-expanded {
+      width: 16rem !important;
+    }
+    .content-expanded {
+      margin-left: 1rem !important;
+    }
+    .content-collapsed {
+      margin-left: 5rem !important;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Mobile Header -->
+    <div class="lg:hidden fixed top-0 left-0 right-0 bg-emerald-50 p-4 z-40 shadow-md flex justify-between items-center">
+      <div class="flex items-center gap-3 text-emerald-600">
+        <i class="fas fa-leaf fa-2x mobile-icon text-center"></i>
+        <span class="text-xl font-bold tracking-wide">EcoCart</span>
+      </div>
+      <button id="mobile-menu-button" class="text-emerald-600">
+        <i class="fas fa-bars mobile-icon"></i>
+      </button>
+    </div>
+  
+    <div class="flex">
+      <!-- Sidebar -->
+      <div id="sidebar"
+        class="fixed left-0 top-0 h-screen transition-all duration-300 bg-emerald-50 shadow-lg flex flex-col justify-between p-5 sidebar-expanded rounded-r-3xl z-50 lg:translate-x-0 -translate-x-full">
+        <!-- Top -->
+        <div>
+          <!-- Logo and toggle -->
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3 text-emerald-600">
+              <i class="fas fa-leaf fa-2x mobile-icon text-center lg:sidebar-icon"></i>
+              <span class="text-xl font-bold tracking-wide sidebar-text">EcoCart</span>
+            </div>
+            <button id="desktop-toggle-button" class="text-emerald-600 hover:text-emerald-800 hidden lg:block">
+              <i id="toggle-icon" class="fas fa-chevron-left text-lg"></i>
+            </button>
+          </div>
+  
+          <!-- Search -->
+          <div class="mb-6 sidebar-search">
+            <div class="relative">
+              <input type="text" placeholder="Search..."
+                class="search-input w-full p-2 pl-10 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 border border-emerald-400" />
+              <i class="search-btn fas fa-search absolute left-2.5 top-5.8 text-black search-icon cursor-pointer"></i>
+            </div>
+          </div>
+          
+  
+          <!-- Menu -->
+          <div>
+            <h2 class="text-xs uppercase text-emerald-600 opacity-80 mb-4 px-3 sidebar-section">Main</h2>
+            <ul class="space-y-1">
+              <a href="home.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl bg-emerald-100 text-emerald-700 font-medium cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/cnpvyndp.json" trigger="morph" state="morph-home-2"
+                    class="sidebar-icon text-center text-emerald-600"></lord-icon>
+                  <span class="sidebar-text">Home</span>
+                </li>
+              </a>
+  
+              <a href="shop.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                    class="sidebar-icon text-center text-emerald-600">
+                  </lord-icon> <span class="sidebar-text">Shop</span>
+                </li>
+              </a>
+  
+              <a href="wishlist.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/xyboiuok.json" trigger="morph" state="morph-heart"
+                    colors="primary:#242424" class="sidebar-icon text-center text-emerald-600">
+                  </lord-icon>
+                  <span class="sidebar-text">Wishlist</span>
+                </li>
+              </a>
+  
+              <a href="Blog.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/lyrrgrsl.json" trigger="hover" colors="primary:#242424"
+                    class="sidebar-icon text-center text-emerald-600">
+                  </lord-icon>
+                  <span class="sidebar-text">Blog</span>
+                </li>
+              </a>
+  
+              <a href="team.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon
+      src="https://cdn.lordicon.com/bxdnmmpl.json"
+      trigger="hover"
+      class="sidebar-icon text-center text-emerald-600">
+  </lord-icon>
+                  <span class="sidebar-text">My Team</span>
+                </li>
+              </a>
+            </ul>
+  
+            <h2 class="text-xs uppercase text-emerald-600 opacity-80 mt-8 mb-4 px-3 sidebar-section">Account</h2>
+            <ul class="space-y-1">
+              <a href="account.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="hover" colors="primary:#242424"
+                    class="sidebar-icon text-center text-emerald-600">
+                  </lord-icon>
+                  <span class="sidebar-text">Account</span>
+                </li>
+              </a>
+  
+              <a href="contact.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/rsvfayfn.json" trigger="hover" colors="primary:#242424"
+                    class="sidebar-icon text-center text-emerald-600">
+                  </lord-icon>
+                  <span class="sidebar-text">Contact Us</span>
+                </li>
+              </a>
+  
+              <a href="help.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                  <lord-icon src="https://cdn.lordicon.com/axteoudt.json" trigger="hover" colors="primary:#242424"
+                    class="sidebar-icon text-center text-emerald-600">
+                  </lord-icon>
+                  <span class="sidebar-text">Help</span>
+                </li>
+              </a>
+  
+              <a href="logout.html">
+                <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-red-700 cursor-pointer">
+                  <i class="fas fa-sign-out-alt mt-3 sidebar-icon text-center text-red-600"></i>
+                  <span class="sidebar-text">Logout</span>
+                </li>
+              </a>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Collapse Button (Mobile) -->
+        <div
+          class="lg:hidden absolute right-0 bottom-5 w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-md transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg -mr-4"
+          id="mobile-close-button">
+          <i class="fas fa-chevron-left text-emerald-600 text-xl"></i>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Content -->
+    <div class="transition-all duration-300 ease-in-out p-5 mt-16 lg:mt-0" id="main-content">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">EcoCart Research & Insights</h1>
+        <button id="mobile-toggle-button" class="lg:hidden text-emerald-600 bg-emerald-100 p-2 rounded-lg">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Blog Content -->
+      <div class="space-y-8">
+        <!-- Research Section -->
+        <div class="bg-white rounded-3xl shadow-sm p-6">
+          <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Latest Research Findings</h2>
+          <div class="space-y-4">
+            <div class="p-4 bg-emerald-50 rounded-xl">
+              <h3 class="text-lg font-semibold text-emerald-800">Environmental Impact Study 2024</h3>
+              <p class="text-gray-600 mt-2">Our latest research shows that eco-conscious shopping can reduce carbon footprint by up to 45% compared to traditional shopping methods.</p>
+              <ul class="mt-3 space-y-2 text-gray-600">
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                  <span>Reduced packaging waste by 60%</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                  <span>Lower transportation emissions by 35%</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                  <span>Increased use of sustainable materials by 75%</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advantages Section -->
+        <div class="bg-white rounded-3xl shadow-sm p-6">
+          <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Key Advantages of EcoCart</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Advantage Card 1 -->
+            <div class="bg-emerald-50 rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-leaf text-2xl text-emerald-600"></i>
+                <h3 class="text-lg font-semibold text-emerald-800">Sustainable Shopping</h3>
+              </div>
+              <p class="text-gray-600">Access to verified eco-friendly products with detailed environmental impact information.</p>
+            </div>
+
+            <!-- Advantage Card 2 -->
+            <div class="bg-emerald-50 rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-chart-line text-2xl text-emerald-600"></i>
+                <h3 class="text-lg font-semibold text-emerald-800">Carbon Footprint Tracking</h3>
+              </div>
+              <p class="text-gray-600">Monitor and reduce your environmental impact with our carbon footprint calculator.</p>
+            </div>
+
+            <!-- Advantage Card 3 -->
+            <div class="bg-emerald-50 rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-users text-2xl text-emerald-600"></i>
+                <h3 class="text-lg font-semibold text-emerald-800">Community Impact</h3>
+              </div>
+              <p class="text-gray-600">Join a community of eco-conscious shoppers and share sustainable living tips.</p>
+            </div>
+
+            <!-- Advantage Card 4 -->
+            <div class="bg-emerald-50 rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <i class="fas fa-award text-2xl text-emerald-600"></i>
+                <h3 class="text-lg font-semibold text-emerald-800">Quality Assurance</h3>
+              </div>
+              <p class="text-gray-600">All products are verified for sustainability and quality standards.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="bg-white rounded-3xl shadow-sm p-6">
+          <h2 class="text-2xl font-semibold text-emerald-700 mb-4">Success Stories</h2>
+          <div class="space-y-4">
+            <div class="bg-emerald-50 rounded-xl p-4">
+              <div class="flex items-center gap-3 mb-3">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="User" class="w-12 h-12 rounded-full object-cover">
+                <div>
+                  <h4 class="font-semibold text-emerald-800">Sarah Johnson</h4>
+                  <p class="text-sm text-gray-500">EcoCart User since 2023</p>
+                </div>
+              </div>
+              <p class="text-gray-600">"Using EcoCart has helped me reduce my household waste by 40% and save money while making sustainable choices. The carbon footprint tracker is incredibly helpful!"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+      <!-- --------------  CHAT BOT ---------------------------- -->
+
+<!-- Chatbot Button -->
+<div id="chatbot-toggle" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-emerald-100 rounded-full shadow-lg border border-emerald-500 flex items-center justify-center cursor-pointer hover:bg-emerald-200 transition">
+  <lord-icon
+    src="https://cdn.lordicon.com/fdxqrdfe.json"
+    trigger="hover"
+    style="width:40px;height:40px">
+</lord-icon>
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window" class="fixed bottom-24 right-6 w-80 max-h-[500px] bg-white shadow-2xl border border-emerald-300 rounded-xl flex flex-col hidden z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center p-4 border-b border-emerald-100 bg-emerald-50 rounded-t-xl">
+    <div class="text-emerald-700 font-semibold text-lg"><i class="fas fa-robot mr-2"></i> Gemini AI</div>
+    <button id="chatbot-close" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 overflow-y-auto p-3 space-y-3 text-sm">
+    <div class="bg-emerald-50 p-2 rounded-md text-gray-800 max-w-[80%]">Hi there! How can I assist you today?</div>
+  </div>
+
+  <!-- Input -->
+  <div class="border-t border-emerald-100 p-2">
+    <div class="flex items-center gap-2">
+      <input id="chatbot-input" type="text" placeholder="Type a message..." class="flex-1 border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300" />
+      <button id="chatbot-send" class="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------- chatbot-------------------------------------------------------------------- -->
+
+
+
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileToggleButton = document.getElementById('mobile-toggle-button');
+      const mobileCloseButton = document.getElementById('mobile-close-button');
+      const desktopToggleButton = document.getElementById('desktop-toggle-button');
+      const sidebar = document.getElementById('sidebar');
+      const toggleIcon = document.getElementById('toggle-icon');
+      const mainContent = document.getElementById('main-content');
+      
+      let isSidebarCollapsed = false;
+      let isMobile = window.innerWidth < 1024;
+
+      function initSidebar() {
+        isMobile = window.innerWidth < 1024;
+        if (isMobile) {
+          sidebar.classList.add('-translate-x-full');
+          sidebar.classList.remove('sidebar-collapsed', 'sidebar-expanded');
+          mainContent.classList.remove('content-collapsed', 'content-expanded');
+        } else {
+          sidebar.classList.remove('-translate-x-full');
+          sidebar.classList.add('sidebar-expanded');
+          mainContent.classList.add('content-expanded');
+          toggleIcon.classList.remove('fa-chevron-right');
+          toggleIcon.classList.add('fa-chevron-left');
+        }
+      }
+
+      function toggleSidebar() {
+        if (!isMobile) {
+          isSidebarCollapsed = !isSidebarCollapsed;
+          if (isSidebarCollapsed) {
+            sidebar.classList.remove('sidebar-expanded');
+            sidebar.classList.add('sidebar-collapsed');
+            mainContent.classList.remove('content-expanded');
+            mainContent.classList.add('content-collapsed');
+            document.querySelectorAll('.sidebar-text, .sidebar-section, .sidebar-search').forEach(el => el.classList.add('hidden'));
+            toggleIcon.classList.replace('fa-chevron-left', 'fa-chevron-right');
+          } else {
+            sidebar.classList.remove('sidebar-collapsed');
+            sidebar.classList.add('sidebar-expanded');
+            mainContent.classList.remove('content-collapsed');
+            mainContent.classList.add('content-expanded');
+            document.querySelectorAll('.sidebar-text, .sidebar-section, .sidebar-search').forEach(el => el.classList.remove('hidden'));
+            toggleIcon.classList.replace('fa-chevron-right', 'fa-chevron-left');
+          }
+        } else {
+          sidebar.classList.toggle('-translate-x-full');
+        }
+      }
+
+      mobileMenuButton.addEventListener('click', toggleSidebar);
+      mobileToggleButton.addEventListener('click', toggleSidebar);
+      mobileCloseButton.addEventListener('click', toggleSidebar);
+      desktopToggleButton.addEventListener('click', toggleSidebar);
+
+      document.addEventListener('click', function(e) {
+        if (isMobile && 
+            !sidebar.contains(e.target) && 
+            !mobileMenuButton.contains(e.target) &&
+            !mobileToggleButton.contains(e.target) &&
+            !sidebar.classList.contains('-translate-x-full')) {
+          sidebar.classList.add('-translate-x-full');
+        }
+      });
+
+      function handleResize() {
+        const wasMobile = isMobile;
+        isMobile = window.innerWidth < 1024;
+        if (wasMobile !== isMobile) initSidebar();
+      }
+
+      initSidebar();
+      window.addEventListener('resize', handleResize);
+    });
+  </script>
+    <script src="chatbot.js"></script>
+    <script src="./home.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

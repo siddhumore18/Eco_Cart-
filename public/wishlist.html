@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoCartbar</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .sidebar-collapsed {
+      width: 5rem !important;
+    }
+
+    .sidebar-expanded {
+      width: 16rem !important;
+    }
+
+    .content-expanded {
+      margin-left: 16rem !important;
+    }
+
+    .content-collapsed {
+      margin-left: 5rem !important;
+    }
+    
+    /* Base icon size for both desktop and mobile */
+    .sidebar-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    
+    /* Larger icons for mobile */
+    @media (max-width: 1023px) {
+      .sidebar-icon {
+        width: 2rem;
+        height: 2rem;
+      }
+      
+      .mobile-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+    
+    .search-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <div class="lg:hidden fixed top-0 left-0 right-0 bg-emerald-50 p-4 z-40 shadow-md flex justify-between items-center">
+    <div class="flex items-center gap-3 text-emerald-600">
+      <i class="fas fa-leaf fa-2x mobile-icon text-center"></i>
+      <span class="text-xl font-bold tracking-wide">EcoCart</span>
+    </div>
+    <button id="mobile-menu-button" class="text-emerald-600">
+      <i class="fas fa-bars mobile-icon"></i>
+    </button>
+  </div>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div id="sidebar"
+      class="fixed left-0 top-0 h-screen transition-all duration-300 bg-emerald-50 shadow-lg flex flex-col justify-between p-5 sidebar-expanded rounded-r-3xl z-50 lg:translate-x-0 -translate-x-full">
+      <!-- Top -->
+      <div>
+        <!-- Logo and toggle -->
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-3 text-emerald-600">
+            <i class="fas fa-leaf fa-2x mobile-icon text-center lg:sidebar-icon"></i>
+            <span class="text-xl font-bold tracking-wide sidebar-text">EcoCart</span>
+          </div>
+          <button id="desktop-toggle-button" class="text-emerald-600 hover:text-emerald-800 hidden lg:block">
+            <i id="toggle-icon" class="fas fa-chevron-left text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6 sidebar-search">
+          <div class="relative">
+            <input type="text" placeholder="Search..."
+              class="search-input w-full p-2 pl-10 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 border border-emerald-400" />
+            <i class="search-btn fas fa-search absolute left-2.5 top-5.8 text-black search-icon cursor-pointer"></i>
+          </div>
+        </div>
+        
+
+        <!-- Menu -->
+        <div>
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mb-4 px-3 sidebar-section">Main</h2>
+          <ul class="space-y-1">
+            <a href="home.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl  hover:bg-emerald-100 text-emerald-700 font-medium cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/cnpvyndp.json" trigger="morph" state="morph-home-2"
+                  class="sidebar-icon text-center text-emerald-600"></lord-icon>
+                <span class="sidebar-text">Home</span>
+              </li>
+            </a>
+
+            <a href="shop.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon> <span class="sidebar-text">Shop</span>
+              </li>
+            </a>
+
+            <a href="wishlist.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/xyboiuok.json" trigger="morph" state="morph-heart"
+                  colors="primary:#242424" class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Wishlist</span>
+              </li>
+            </a>
+
+            <a href="Blog.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/lyrrgrsl.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Blog</span>
+              </li>
+            </a>
+
+            <a href="team.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon
+    src="https://cdn.lordicon.com/bxdnmmpl.json"
+    trigger="hover"
+    class="sidebar-icon text-center text-emerald-600">
+</lord-icon>
+                <span class="sidebar-text">My Team</span>
+              </li>
+            </a>
+          </ul>
+
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mt-8 mb-4 px-3 sidebar-section">Account</h2>
+          <ul class="space-y-1">
+            <a href="account.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Account</span>
+              </li>
+            </a>
+
+            <a href="contact.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/rsvfayfn.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Contact Us</span>
+              </li>
+            </a>
+
+            <a href="help.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/axteoudt.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Help</span>
+              </li>
+            </a>
+
+            <a href="logout.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-red-700 cursor-pointer">
+                <i class="fas fa-sign-out-alt mt-3 sidebar-icon text-center text-red-600"></i>
+                <span class="sidebar-text">Logout</span>
+              </li>
+            </a>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Collapse Button (Mobile) -->
+      <div
+        class="lg:hidden absolute right-0 bottom-5 w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-md transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg -mr-4"
+        id="mobile-close-button">
+        <i class="fas fa-chevron-left text-emerald-600 text-xl"></i>
+      </div>
+    </div>
+
+      <!-- Your main content here -->
+   <!-- Your main content here -->
+   <div class="transition-all duration-300 ease-in-out p-5 mt-16 lg:mt-0" id="main-content">
+    <div class="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-4">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-800">❤️ My Eco Wishlist</h2>
+      <a href="home.html" class="flex items-center text-emerald-600 hover:text-emerald-800 transition-colors w-fit">
+        <i class="fas fa-arrow-left mr-2"></i>
+        <span>Back to Home</span>
+      </a>
+    </div>
+    
+    <div id="wishlist-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Wishlist items will be inserted here -->
+    </div>
+
+    <div id="empty-state" class="flex flex-col items-center justify-center py-16 text-center">
+      <lord-icon src="https://cdn.lordicon.com/tdxypxgp.json" trigger="loop" colors="primary:#10b981" style="width:120px;height:120px">
+      </lord-icon>
+      <h3 class="text-xl font-semibold text-gray-700 mt-6">Your wishlist is empty</h3>
+      <p class="text-gray-500 mt-2 max-w-md mx-auto">Start adding eco-friendly products you love to your wishlist!</p>
+      <a href="shop.html" class="mt-6 inline-flex items-center px-5 py-2.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
+        <i class="fas fa-shopping-bag mr-2"></i>
+        Browse Shop
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+    </div>
+
+   <!-- Chatbot Button -->
+<div id="chatbot-toggle" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-emerald-100 rounded-full shadow-lg border border-emerald-500 flex items-center justify-center cursor-pointer hover:bg-emerald-200 transition">
+  <lord-icon
+    src="https://cdn.lordicon.com/fdxqrdfe.json"
+    trigger="hover"
+    style="width:40px;height:40px">
+</lord-icon>
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window" class="fixed bottom-24 right-6 w-80 max-h-[500px] bg-white shadow-2xl border border-emerald-300 rounded-xl flex flex-col hidden z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center p-4 border-b border-emerald-100 bg-emerald-50 rounded-t-xl">
+    <div class="text-emerald-700 font-semibold text-lg"><i class="fas fa-robot mr-2"></i> Gemini AI</div>
+    <button id="chatbot-close" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 overflow-y-auto p-3 space-y-3 text-sm">
+    <div class="bg-emerald-50 p-2 rounded-md text-gray-800 max-w-[80%]">Hi there! How can I assist you today?</div>
+  </div>
+
+  <!-- Input -->
+  <div class="border-t border-emerald-100 p-2">
+    <div class="flex items-center gap-2">
+      <input id="chatbot-input" type="text" placeholder="Type a message..." class="flex-1 border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300" />
+      <button id="chatbot-send" class="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+  </div>
+
+
+
+  
+  <script>
+    const container = document.getElementById("wishlist-container");
+    const emptyState = document.getElementById("empty-state");
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  
+    function renderWishlist() {
+      container.innerHTML = '';
+      
+      if (wishlist.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        wishlist.forEach((product, index) => {
+          const card = document.createElement("div");
+          card.className = "bg-white rounded-xl shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg h-full flex flex-col";
+          card.innerHTML = `
+            <!-- Product Image -->
+            <div class="relative aspect-square w-full overflow-hidden">
+              <img 
+                src="${product.thumbnail || 'https://via.placeholder.com/300'}" 
+                alt="${product.title}"
+                class="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                loading="lazy"
+              >
+            </div>
+            
+            <!-- Card Content -->
+            <div class="flex flex-1 flex-col p-5">
+              <!-- Product Title -->
+              <h3 class="mb-2 text-lg font-medium text-gray-900 line-clamp-2">
+                ${product.title}
+              </h3>
+              
+              <!-- Price -->
+              <div class="mb-4 flex items-center">
+                <span class="text-xl font-semibold text-gray-800">
+                  ${product.price ? `$${product.price}` : "N/A"}
+                </span>
+              </div>
+              
+              <!-- Action Buttons -->
+              <div class="mt-auto flex space-x-3">
+                <a 
+                  href="${product.link}" 
+                  target="_blank"
+                  class="flex-1 rounded-md bg-emerald-600 px-4 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                >
+                  View Details
+                </a>
+                <button 
+                  onclick="removeFromWishlist(${index})"
+                  class="flex items-center justify-center rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  aria-label="Remove item"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+    }
+  
+    function removeFromWishlist(index) {
+      wishlist.splice(index, 1);
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      renderWishlist();
+    }
+  
+    // Initial render
+    renderWishlist();
+  </script>
+  <script src="chatbot.js"></script>
+  <script src="./home.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

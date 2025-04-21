@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCart - Sign Up</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtT6yy_MVe5BUouOGALQtykPFpBRn6Kjs",
+      authDomain: "eco-cart2.firebaseapp.com",
+      projectId: "eco-cart2",
+      storageBucket: "eco-cart2.firebasestorage.app",
+      messagingSenderId: "346686441375",
+      appId: "1:346686441375:web:a310f6b3c450f28ecc9faa",
+      measurementId: "G-ZR943R24MF"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const signupForm = document.getElementById('signupForm');
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const phoneInput = document.getElementById('phone');
+
+      // Toggle Password Visibility
+      document.querySelectorAll('.toggle-password').forEach(icon => {
+        icon.addEventListener('click', function() {
+          const input = document.querySelector(this.getAttribute('toggle'));
+          const type = input.type === 'password' ? 'text' : 'password';
+          input.type = type;
+          this.classList.toggle('fa-eye-slash');
+        });
+      });
+
+      // Phone number validation
+      phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 10) value = value.slice(0, 10);
+        e.target.value = value;
+      });
+
+      // Handle Form Submission
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = signupForm.name.value.trim();
+        const email = signupForm.email.value.trim();
+        const phone = phoneInput.value.trim();
+        const password = passwordInput.value.trim();
+        const confirmPassword = confirmPasswordInput.value.trim();
+
+        // Clear previous errors
+        document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+        // Validation
+        if (!name || !email || !password || !confirmPassword || !phone) {
+          showError('All fields are required');
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          showError('Passwords do not match');
+          return;
+        }
+
+        if (password.length < 6) {
+          showError('Password must be at least 6 characters');
+          return;
+        }
+
+        if (phone.length !== 10) {
+          showError('Please enter a valid 10-digit phone number');
+          return;
+        }
+
+        try {
+          // Create user
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          
+          // Update user profile
+          await updateProfile(userCredential.user, {
+            displayName: name
+          });
+
+          // Create user document in Firestore
+          await setDoc(doc(db, "users", userCredential.user.uid), {
+            name: name,
+            email: email,
+            phone: phone,
+            createdAt: new Date(),
+            lastLogin: new Date(),
+            preferences: {
+              emailNotifications: true,
+              smsNotifications: true
+            }
+          });
+
+          // Show success message
+          showSuccess('Account created successfully! Redirecting to home page...');
+          
+          // Redirect to home page after 2 seconds
+          setTimeout(() => {
+            window.location.href = 'Home.html';
+          }, 2000);
+          
+        } catch (error) {
+          handleSignupError(error);
+        }
+      });
+
+      function showError(message) {
+        const errorDiv = document.getElementById('error-message');
+        errorDiv.textContent = message;
+        errorDiv.classList.remove('hidden');
+        setTimeout(() => errorDiv.classList.add('hidden'), 5000);
+      }
+
+      function showSuccess(message) {
+        const successDiv = document.getElementById('success-message');
+        successDiv.textContent = message;
+        successDiv.classList.remove('hidden');
+        setTimeout(() => successDiv.classList.add('hidden'), 5000);
+      }
+
+      function handleSignupError(error) {
+        const errorMap = {
+          'auth/email-already-in-use': 'Email already exists',
+          'auth/invalid-email': 'Invalid email address',
+          'auth/operation-not-allowed': 'Operation not allowed',
+          'auth/weak-password': 'Password is too weak',
+          'auth/network-request-failed': 'Network error. Please check your connection.',
+          'auth/too-many-requests': 'Too many attempts. Please try again later.'
+        };
+
+        showError(errorMap[error.code] || 'Signup failed. Please try again.');
+      }
+    });
+  </script>
+
+  <style>
+    .error-message, .success-message {
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-md w-96">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-emerald-600 mb-2">
+        <i class="fas fa-leaf mr-2"></i>EcoCart
+      </h1>
+      <p class="text-gray-600">Create your account</p>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error-message" class="hidden error-message bg-red-100 text-red-700 p-3 rounded mb-4"></div>
+    
+    <!-- Success Message -->
+    <div id="success-message" class="hidden success-message bg-emerald-100 text-emerald-700 p-3 rounded mb-4"></div>
+
+    <form id="signupForm" class="space-y-4">
+      <!-- Name Input -->
+      <div>
+        <label class="block text-gray-700 mb-2">Full Name</label>
+        <input type="text" name="name" required 
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+               placeholder="John Doe">
+      </div>
+
+      <!-- Email Input -->
+      <div>
+        <label class="block text-gray-700 mb-2">Email</label>
+        <input type="email" name="email" required
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+               placeholder="john@example.com">
+      </div>
+
+      <!-- Phone Number Input -->
+      <div>
+        <label class="block text-gray-700 mb-2">Phone Number</label>
+        <div class="relative">
+          <input type="tel" id="phone" required
+                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                 placeholder="1234567890"
+                 pattern="[0-9]{10}"
+                 maxlength="10">
+          <i class="fas fa-phone absolute right-3 top-3 text-gray-400"></i>
+        </div>
+      </div>
+
+      <!-- Password Input -->
+      <div>
+        <label class="block text-gray-700 mb-2">Password</label>
+        <div class="relative">
+          <input type="password" id="password" required
+                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                 placeholder="••••••••">
+          <i class="fas fa-eye toggle-password absolute right-3 top-3 text-gray-400 cursor-pointer"
+             toggle="#password"></i>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label class="block text-gray-700 mb-2">Confirm Password</label>
+        <div class="relative">
+          <input type="password" id="confirmPassword" required
+                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                 placeholder="••••••••">
+          <i class="fas fa-eye toggle-password absolute right-3 top-3 text-gray-400 cursor-pointer"
+             toggle="#confirmPassword"></i>
+        </div>
+      </div>
+
+      <!-- Terms Checkbox -->
+      <div class="flex items-center">
+        <input type="checkbox" id="terms" required 
+               class="w-4 h-4 text-emerald-600 border-gray-300 rounded">
+        <label for="terms" class="ml-2 text-sm text-gray-600">
+          I agree to the <a href="#" class="text-emerald-600 hover:underline">Terms of Service</a>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" 
+              class="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition">
+        Create Account
+      </button>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-gray-600">Already have an account? 
+        <a href="Login.html" class="text-emerald-600 hover:underline">Sign in</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoCartbar</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#6ee7b7',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+          },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    .sidebar-collapsed {
+      width: 5rem !important;
+    }
+
+    .sidebar-expanded {
+      width: 16rem !important;
+    }
+
+    .content-expanded {
+      margin-left: 16rem !important;
+    }
+
+    .content-collapsed {
+      margin-left: 5rem !important;
+    }
+    
+    /* Base icon size for both desktop and mobile */
+    .sidebar-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    
+    /* Larger icons for mobile */
+    @media (max-width: 1023px) {
+      .sidebar-icon {
+        width: 2rem;
+        height: 2rem;
+      }
+      
+      .mobile-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+    
+    .search-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <div class="lg:hidden fixed top-0 left-0 right-0 bg-emerald-50 p-4 z-40 shadow-md flex justify-between items-center">
+    <div class="flex items-center gap-3 text-emerald-600">
+      <i class="fas fa-leaf fa-2x mobile-icon text-center"></i>
+      <span class="text-xl font-bold tracking-wide">EcoCart</span>
+    </div>
+    <button id="mobile-menu-button" class="text-emerald-600">
+      <i class="fas fa-bars mobile-icon"></i>
+    </button>
+  </div>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <div id="sidebar"
+      class="fixed left-0 top-0 h-screen transition-all duration-300 bg-emerald-50 shadow-lg flex flex-col justify-between p-5 sidebar-expanded rounded-r-3xl z-50 lg:translate-x-0 -translate-x-full">
+      <!-- Top -->
+      <div>
+        <!-- Logo and toggle -->
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-3 text-emerald-600">
+            <i class="fas fa-leaf fa-2x mobile-icon text-center lg:sidebar-icon"></i>
+            <span class="text-xl font-bold tracking-wide sidebar-text">EcoCart</span>
+          </div>
+          <button id="desktop-toggle-button" class="text-emerald-600 hover:text-emerald-800 hidden lg:block">
+            <i id="toggle-icon" class="fas fa-chevron-left text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6 sidebar-search">
+          <div class="relative">
+            <input type="text" placeholder="Search..."
+              class="search-input w-full p-2 pl-10 rounded-xl bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 border border-emerald-400" />
+            <i class="search-btn fas fa-search absolute left-2.5 top-5.8 text-black search-icon cursor-pointer"></i>
+          </div>
+        </div>
+        
+
+        <!-- Menu -->
+        <div>
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mb-4 px-3 sidebar-section">Main</h2>
+          <ul class="space-y-1">
+            <a href="home.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 font-medium cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/cnpvyndp.json" trigger="morph" state="morph-home-2"
+                  class="sidebar-icon text-center text-emerald-600"></lord-icon>
+                <span class="sidebar-text">Home</span>
+              </li>
+            </a>
+
+            <a href="shop.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/mfmkufkr.json" trigger="hover"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon> <span class="sidebar-text">Shop</span>
+              </li>
+            </a>
+
+            <a href="wishlist.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/xyboiuok.json" trigger="morph" state="morph-heart"
+                  colors="primary:#242424" class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Wishlist</span>
+              </li>
+            </a>
+
+            <a href="Blog.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/lyrrgrsl.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Blog</span>
+              </li>
+            </a>
+
+            <a href="team.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon
+    src="https://cdn.lordicon.com/bxdnmmpl.json"
+    trigger="hover"
+    class="sidebar-icon text-center text-emerald-600">
+</lord-icon>
+                <span class="sidebar-text">My Team</span>
+              </li>
+            </a>
+          </ul>
+
+          <h2 class="text-xs uppercase text-emerald-600 opacity-80 mt-8 mb-4 px-3 sidebar-section">Account</h2>
+          <ul class="space-y-1">
+            <a href="account.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/kthelypq.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Account</span>
+              </li>
+            </a>
+
+            <a href="contact.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/rsvfayfn.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Contact Us</span>
+              </li>
+            </a>
+
+            <a href="help.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-emerald-700 cursor-pointer">
+                <lord-icon src="https://cdn.lordicon.com/axteoudt.json" trigger="hover" colors="primary:#242424"
+                  class="sidebar-icon text-center text-emerald-600">
+                </lord-icon>
+                <span class="sidebar-text">Help</span>
+              </li>
+            </a>
+
+            <a href="logout.html">
+              <li class="flex items-center gap-3 p-3 rounded-xl hover:bg-emerald-100 text-red-700 cursor-pointer">
+                <i class="fas fa-sign-out-alt mt-3 sidebar-icon text-center text-red-600"></i>
+                <span class="sidebar-text">Logout</span>
+              </li>
+            </a>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Collapse Button (Mobile) -->
+      <div
+        class="lg:hidden absolute right-0 bottom-5 w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-md transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-lg -mr-4"
+        id="mobile-close-button">
+        <i class="fas fa-chevron-left text-emerald-600 text-xl"></i>
+      </div>
+    </div>
+
+
+    <div class="transition-all duration-300 ease-in-out p-5 mt-16 lg:mt-0" id="main-content">
+
+      <section class="Product p-4">
+        <div class="max-w-5xl mx-auto">
+          <!-- Search -->
+          <div class="shadow-lg rounded-3xl p-1 border border-emerald-400 bg-white max-w-2xl mx-auto">
+            <div class="flex">
+              <input type="text" id="shop-search-input"
+                class="search-input flex-grow border-0 py-3 px-4 rounded-l-3xl focus:ring-0 focus:outline-none"
+                placeholder="Search for products..." />
+              <button class="search-btn bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-5 rounded-3xl">
+                <i class="fas fa-search"></i>
+                <span class="ml-2 hidden sm:inline">Search</span>
+              </button>
+            </div>
+          </div>
+    
+          <!-- Filter Buttons -->
+          <div class="mb-6 flex flex-wrap gap-2 mt-4 justify-center">
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600 bg-emerald-500 text-white" data-filter="All">All</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600" data-filter="Recyclable">Recyclable</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600" data-filter="Biodegradable">Biodegradable</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600" data-filter="Plastic-Free">Plastic-Free</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600" data-filter="Sustainable">Sustainable</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600" data-filter="Organic">Organic</button>
+            <button class="filter-btn px-4 py-2 rounded-full border border-emerald-400 text-emerald-600" data-filter="Fair Trade">Fair Trade</button>
+          </div>
+    
+          <!-- Products -->
+          <div id="shop-products" class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>
+    
+          <!-- Show More Button -->
+          <div class="text-center mt-6">
+            <button id="show-more-btn" class="bg-emerald-500 text-white px-6 py-2 rounded-full hover:bg-emerald-600 transition">Show More</button>
+          </div>
+        </div>
+      </section>
+    
+    
+    
+      <!-- Your main content here -->
+    </div>
+
+    <div class="chatbot fixed right-5 bottom-5 z-50">
+      <div
+        class="h-14 w-14 rounded-full border-2 border-emerald-400 bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-emerald-50 transition-colors duration-200">
+        <lord-icon src="https://cdn.lordicon.com/ayhtotha.json" trigger="hover" colors="primary:#16c72e"
+          style="width:42px;height:42px">
+        </lord-icon>
+      </div>
+    </div>
+
+        <!-- --------------  CHAT BOT ---------------------------- -->
+
+<!-- Chatbot Button -->
+<div id="chatbot-toggle" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-emerald-100 rounded-full shadow-lg border border-emerald-500 flex items-center justify-center cursor-pointer hover:bg-emerald-200 transition">
+  <lord-icon
+    src="https://cdn.lordicon.com/fdxqrdfe.json"
+    trigger="hover"
+    style="width:40px;height:40px">
+</lord-icon>
+</div>
+
+<!-- Chatbot Window -->
+<div id="chatbot-window" class="fixed bottom-24 right-6 w-80 max-h-[500px] bg-white shadow-2xl border border-emerald-300 rounded-xl flex flex-col hidden z-50">
+  <!-- Header -->
+  <div class="flex justify-between items-center p-4 border-b border-emerald-100 bg-emerald-50 rounded-t-xl">
+    <div class="text-emerald-700 font-semibold text-lg"><i class="fas fa-robot mr-2"></i> Gemini AI</div>
+    <button id="chatbot-close" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fas fa-times"></i></button>
+  </div>
+
+  <!-- Messages -->
+  <div id="chatbot-messages" class="flex-1 overflow-y-auto p-3 space-y-3 text-sm">
+    <div class="bg-emerald-50 p-2 rounded-md text-gray-800 max-w-[80%]">Hi there! How can I assist you today?</div>
+  </div>
+
+  <!-- Input -->
+  <div class="border-t border-emerald-100 p-2">
+    <div class="flex items-center gap-2">
+      <input id="chatbot-input" type="text" placeholder="Type a message..." class="flex-1 border rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300" />
+      <button id="chatbot-send" class="bg-emerald-500 text-white px-4 py-2 rounded-lg hover:bg-emerald-600 transition"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------- chatbot-------------------------------------------------------------------- -->
+
+
+
+  
+
+
+  <script>
+    let allShopProducts = [];
+    let filteredProducts = [];
+    let ecoIndex = 0;
+    const batchSize = 9;
+    const shopContainer = document.getElementById("shop-products");
+
+    function getEcoInfo(product) {
+  const title = (product.title || '').toLowerCase();
+  const desc = (product.description || '').toLowerCase();
+  const tags = (product.tags || []).map(t => t.toLowerCase());
+  let score = 1;
+  const badges = [];
+  const styledBadges = [];
+
+  // Original logic with both text and emoji versions
+  if (title.includes('recyclable') || desc.includes('recyclable') || tags.includes('recyclable')) { 
+    badges.push('Recyclable');
+    styledBadges.push('♻️ Recyclable');
+    score += 1; 
+  }
+  if (title.includes('biodegradable') || tags.includes('biodegradable')) { 
+    badges.push('Biodegradable');
+    styledBadges.push('🔁 Biodegradable');
+    score += 1.5; 
+  }
+  if (title.includes('plastic-free') || title.includes('zero plastic') || tags.includes('plastic-free')) { 
+    badges.push('Plastic-Free');
+    styledBadges.push('🚫 Plastic-Free');
+    score += 1.5; 
+  }
+  if (title.includes('sustainable') || tags.includes('sustainable')) { 
+    badges.push('Sustainable');
+    styledBadges.push('🌱 Sustainable');
+    score += 2; 
+  }
+  if (title.includes('organic') || tags.includes('organic')) { 
+    badges.push('Organic');
+    styledBadges.push('🌿 Organic');
+    score += 1; 
+  }
+  if (title.includes('fair trade') || tags.includes('fair trade')) { 
+    badges.push('Fair Trade');
+    styledBadges.push('🤝 Fair Trade');
+    score += 1; 
+  }
+
+  return { 
+    score: Math.max(1, Math.min(Math.round(score), 5)), 
+    badges, // Original badges without emojis
+    styledBadges, // Badges with emoji icons
+    ratingHTML: `<i class="fa-solid fa-leaf text-green-500"></i>`.repeat(Math.floor(score)) +
+               `<i class="fa-solid fa-leaf text-gray-300"></i>`.repeat(5 - Math.floor(score)),
+    badgeHTML: styledBadges.map(b => 
+      `<span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full">${b}</span>`
+    ).join('')
+  };
+}
+
+    function getWishlist() {
+      return JSON.parse(localStorage.getItem("wishlist")) || [];
+    }
+
+    function checkIfWishlisted(product) {
+      return getWishlist().some(p => p.title === product.title);
+    }
+
+    function toggleWishlist(product) {
+      let wishlist = getWishlist();
+      const index = wishlist.findIndex(p => p.title === product.title);
+      const wishlisted = index === -1;
+
+      if (wishlisted) {
+        wishlist.push(product);
+      } else {
+        wishlist.splice(index, 1);
+      }
+
+      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+      document.querySelectorAll(`[data-title="${product.title}"]`).forEach(btn => {
+        btn.textContent = wishlisted ? "❤️" : "🤍";
+      });
+    }
+
+    function renderProductsBatch() {
+      const batch = filteredProducts.slice(ecoIndex, ecoIndex + batchSize);
+
+      batch.forEach(product => {
+        const { score, badges } = getEcoInfo(product);
+        const badgeHTML = badges.map(b => `<span class='bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded-full mr-1'>${b}</span>`).join('');
+        const ratingHTML = `<i class='fa-solid fa-leaf text-green-500'></i>`.repeat(score) + `<i class='fa-solid fa-leaf text-gray-300'></i>`.repeat(5 - score);
+
+        const card = `
+<div class="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-gray-100 w-full">
+  <div class="relative flex justify-center items-center h-40 overflow-hidden bg-gray-50">
+    <img 
+      src="${product.thumbnail || 'https://via.placeholder.com/250'}" 
+      alt="${product.title}" 
+      class="max-h-full max-w-full object-contain"
+      onerror="this.src='https://via.placeholder.com/250?text=No+Image'"
+      loading="lazy"
+    >
+  </div>
+  <div class="p-3 space-y-2">
+    <h4 class="text-base font-semibold text-gray-900 line-clamp-2 leading-tight min-h-[2.5rem]">${product.title}</h4>
+    <div class="flex justify-between items-center mt-1">
+      <p class="text-lg font-bold text-gray-900">
+        ₹${(parseFloat(product.price?.replace(/[^0-9.]/g, '')) * 83).toFixed(0)}
+      </p>
+      <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+        score > 4 ? 'bg-emerald-100 text-emerald-800' : 
+        score > 3 ? 'bg-green-100 text-green-800' : 
+        score > 2 ? 'bg-amber-100 text-amber-800' : 
+        'bg-rose-100 text-rose-800'
+      }">
+        Eco ${score}/5
+      </span>
+    </div>
+    <div class="flex items-center space-x-0.5 text-amber-400 text-lg mt-1">
+      ${'<i class="fa-solid fa-leaf text-green-500"></i>'.repeat(score)}
+      ${'<i class="fa-solid fa-leaf text-gray-300"></i>'.repeat(5 - score)}
+    </div>
+    <div class="flex flex-wrap gap-1 mt-1">
+      ${badges.map(b => `<span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full">${b}</span>`).join('')}
+    </div>
+    <div class="flex gap-2 mt-3">
+      <a 
+        href="${product.link}" 
+        target="_blank"
+        class="flex-1 py-1.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-md text-center transition-colors"
+      >
+        View Details
+      </a>
+      <button 
+        data-title="${product.title}" 
+        onclick='toggleWishlist(${JSON.stringify(product)})'
+        class="w-9 h-9 flex items-center justify-center text-2xl transition-transform hover:scale-110"
+        aria-label="${checkIfWishlisted(product) ? 'Remove from wishlist' : 'Add to wishlist'}"
+      >
+        ${checkIfWishlisted(product) ? "❤️" : "🤍"}
+      </button>
+    </div>
+  </div>
+</div>`;
+
+        shopContainer.innerHTML += card;
+      });
+
+      ecoIndex += batchSize;
+      if (ecoIndex >= filteredProducts.length) {
+        document.getElementById("show-more-btn").classList.add("hidden");
+      }
+    }
+
+    function filterAndRender(category) {
+      ecoIndex = 0;
+      const query = document.getElementById("shop-search-input").value.toLowerCase();
+      filteredProducts = allShopProducts.filter(p => p.title.toLowerCase().includes(query));
+      if (category !== 'All') {
+        filteredProducts = filteredProducts.filter(p => getEcoInfo(p).badges.includes(category));
+      }
+      filteredProducts.sort((a, b) => getEcoInfo(b).score - getEcoInfo(a).score);
+      shopContainer.innerHTML = "";
+      document.getElementById("show-more-btn").classList.remove("hidden");
+      renderProductsBatch();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("/api/products")
+        .then(res => res.json())
+        .then(data => {
+          allShopProducts = [...data.ecoFriendly, ...data.all];
+          filteredProducts = [...allShopProducts];
+          filteredProducts.sort((a, b) => getEcoInfo(b).score - getEcoInfo(a).score);
+          renderProductsBatch();
+        });
+
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("bg-emerald-500", "text-white"));
+          btn.classList.add("bg-emerald-500", "text-white");
+          filterAndRender(btn.dataset.filter);
+        });
+      });
+
+      document.getElementById("shop-search-input").addEventListener("input", () => {
+        const activeFilter = document.querySelector(".filter-btn.bg-emerald-500")?.dataset.filter || "All";
+        filterAndRender(activeFilter);
+      });
+
+      document.getElementById("show-more-btn").addEventListener("click", () => {
+        renderProductsBatch();
+      });
+    });
+  </script>
+
+  <script src="chatbot.js"></script>
+  <script src="./home.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

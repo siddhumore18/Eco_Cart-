@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoCart - Login</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+
+  
+  <script type="module" src="Authentication.js"></script>  
+  
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script type=""module" src="A"></script>
+  <style>
+    .login-container {
+      background-image: url('./assets/images/eco-environment.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+      z-index: 1;
+    }
+    .login-container > div {
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+  <div class="min-h-screen flex items-center justify-center login-container">
+    <div class="max-w-md w-full mx-4">
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <div class="flex items-center justify-center gap-3 text-emerald-600">
+          <i class="fas fa-leaf text-4xl"></i>
+          <span class="text-3xl font-bold tracking-wide">EcoCart</span>
+        </div>
+        <p class="text-gray-600 mt-2">Welcome back! Please login to your account</p>
+      </div>
+
+      <!-- Login Form -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <form id="loginForm" class="space-y-6">
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-envelope text-emerald-400"></i>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="block w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
+                placeholder="Enter your email"
+              />
+            </div>
+            <p id="emailError" class="mt-1 text-sm text-red-600 hidden"></p>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-lock text-emerald-400"></i>
+              </div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="block w-full pl-10 pr-3 py-2 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-300"
+                placeholder="Enter your password"
+              />
+              <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <button type="button" id="togglePassword" class="text-emerald-400 hover:text-emerald-600">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+            <p id="passwordError" class="mt-1 text-sm text-red-600 hidden"></p>
+          </div>
+
+          <!-- Remember Me & Forgot Password -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                class="h-4 w-4 text-emerald-600 focus:ring-emerald-200 border-emerald-300 rounded"
+              />
+              <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+            </div>
+            <a href="#" class="text-sm text-emerald-600 hover:text-emerald-700">Forgot password?</a>
+          </div>
+
+          <!-- Login Button -->
+          <button
+            type="submit"
+            id="loginButton"
+            class="w-full bg-emerald-500 text-white py-2 px-4 rounded-lg hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:ring-offset-2 transition-colors duration-300"
+          >
+            <span>Login</span>
+            <div class="hidden animate-spin inline-block w-4 h-4 ml-2 border-t-2 border-white rounded-full"></div>
+          </button>
+
+          <!-- Social Login -->
+          <div class="mt-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <button
+                type="button"
+                id="googleLoginBtn"
+                class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                <i class="fab fa-google text-emerald-600"></i>
+                <span class="ml-2">Sign in with Google</span>
+                <div class="hidden animate-spin ml-2 w-4 h-4 border-t-2 border-emerald-600 rounded-full"></div>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Sign Up Link -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-gray-600">
+            Don't have an account?
+            <a href="signin.html" class="font-medium text-emerald-600 hover:text-emerald-700">Sign up</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+</body>
+</html> 

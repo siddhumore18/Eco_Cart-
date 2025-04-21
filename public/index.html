@@ -1,149 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EcoCart - Sustainable Shopping Assistant</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoCart - Sustainable Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial Rounded MT Bold', Arial, sans-serif;
+        }
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+        /* Loader Styles */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css">
+        .loader-content {
+            text-align: center;
+            position: relative;
+        }
+
+        .eco-logo {
+            width: 120px;
+            margin-bottom: 30px;
+            animation: logoFadeIn 1.5s ease-out forwards,
+                       logoPulse 2s ease-in-out infinite;
+            opacity: 0;
+            filter: drop-shadow(0 0 10px rgba(76, 175, 80, 0.5));
+        }
+
+        .splash-text {
+            color: #4CAF50;
+            font-family: 'Verdana', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 2rem;
+            line-height: 1.4;
+            letter-spacing: 3px;
+            margin: 20px 0;
+            animation: textGlow 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        /* Environmental Warning */
+        .environment-slogan {
+            position: fixed;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+            background:black;
+            border-radius: 10px;
+            z-index: 500;
+            animation: sloganFade 8s ease-in-out infinite;
+            border-left: 4px solid #ff4444;
+            font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Animations */
+        @keyframes logoFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes textGlow {
+            0%, 100% { 
+                text-shadow: 0 0 15px rgba(76, 175, 80, 0.6),
+                             0 0 30px rgba(76, 175, 80, 0.3);
+            }
+            50% { 
+                text-shadow: 0 0 25px rgba(76, 175, 80, 0.8),
+                             0 0 40px rgba(76, 175, 80, 0.5);
+            }
+        }
+
+        @keyframes textFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sloganFade {
+            0%, 100% { 
+                opacity: 0.8;
+                transform: translateX(-50%) translateY(20px);
+            }
+            50% { 
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Background Elements */
+        #vanta-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        spline-viewer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .splash-text {
+                font-size: 1.5rem;
+                letter-spacing: 2px;
+            }
+            
+            .eco-logo {
+                width: 80px;
+            }
+
+            .environment-slogan {
+                font-size: 1rem;
+                padding: 15px;
+                bottom: 5%;
+                max-width: 90%;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <!-- Sidebar Navigation -->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <div class="brand-logo">
-        <i class="fas fa-leaf"></i>
-        <span class="brand-text">EcoCart</span>
-      </div>
+    <!-- Animated Splash Screen -->
+    <div id="loader">
+        <div class="loader-content">
+           
+            <div class="splash-text" style="animation-delay: 0.5s">
+                Sustainable Innovation<br>United with Nature
+            </div>
+        </div>
     </div>
-
     
-
-    <div class="nav-section">
-      <div class="nav-section-title">Main</div>
-      <a class="nav-link active" href="#"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
-      <a class="nav-link" href="#"><i class="far fa-folder"></i><span>Project</span></a>
-      <a class="nav-link" href="#"><i class="fas fa-file-invoice"></i><span>Transaction</span></a>
-      <a class="nav-link" href="#"><i class="fas fa-users"></i><span>My Team</span></a>
-      <a class="nav-link" href="#"><i class="fas fa-chart-line"></i><span>Research Data</span></a>
+    <!-- Environmental Warning -->
+    <div class="environment-slogan">
+        "A Man Runs to the Light of Modernization,<br>
+        Unaware He's Burning the World Behind."
     </div>
 
-    <div class="nav-section">
-      <div class="nav-section-title">Secondary</div>
-      <a class="nav-link" href="#"><i class="far fa-file-alt"></i><span>Report</span></a>
-      <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i><span>Sale</span></a>
-      <a class="nav-link" href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
-      <a class="nav-link" href="#"><i class="far fa-question-circle"></i><span>Help</span></a>
-      <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i><span>Log out</span></a>
-    </div>
+    <!-- Background Elements -->
 
-    <div class="sidebar-toggle" onclick="toggleSidebar()">
-      <i class="fas fa-chevron-left"></i>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content" id="main-content">
-    <div class="container mt-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-            Shop Sustainably with <span class="text-emerald-600">EcoCart</span>
-          </h1>
-          <p class="text-lg text-gray-600 mb-5">Discover eco-friendly products and make informed shopping decisions</p>
-
-          <!-- Injected search result -->
-
-
-          <div class="search-box mt-4 mb-3">
-            <input type="text" id="search-input" class="form-control" placeholder="Search eco product...">
-            <button id="search-btn" class="btn btn-success mt-2">Search</button>
-          </div>
-
-          <div class="mt-4 d-flex gap-3 justify-content-center flex-wrap">
-            <div class="badge bg-success bg-opacity-10 text-success py-2 px-3"><i class="fas fa-seedling me-2"></i>1M+
-              Eco Products</div>
-            <div class="badge bg-success bg-opacity-10 text-success py-2 px-3"><i class="fas fa-globe me-2"></i>500+
-              Sustainable Brands</div>
-          </div>
-        </div>
+    <div class=" fixed top-6 left-6 gap-3 text-emerald-600">
+        <i class="fas fa-leaf fa-2x mobile-icon text-center lg:sidebar-icon"></i>
+        <span class="text-xl font-bold tracking-wide sidebar-text">EcoCart</span>
       </div>
-    </div>
+    <div id="vanta-background"></div>
+    <button 
+  class="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-full shadow-lg hover:scale-110 hover:shadow-2xl transform transition-all duration-500 ease-in-out animate-fade-in"
+  onclick="window.location.href='signin.html'">
+  <i class="fas fa-leaf mr-2"></i> ENTER ECO
+</button>
 
-    <div class="container my-5 py-5">
-      <h2 class="text-center text-2xl font-bold text-gray-800 mb-5">Popular Eco Categories</h2>
-      <div class="row g-4">
-        <!-- Category Card 1 -->
-        <div class="col-md-4">
-          <div class="eco-card-hover bg-white rounded-3xl p-5 text-center h-100">
-            <div
-              class="w-16 h-16 bg-emerald-100 rounded-2xl mx-auto mb-4 d-flex align-items-center justify-content-center">
-              <i class="fas fa-tshirt text-2xl text-emerald-600"></i>
-            </div>
-            <h3 class="font-bold text-lg mb-2">Sustainable Fashion</h3>
-            <p class="text-gray-600">Organic cotton, recycled materials, and ethical production</p>
-            <div class="mt-3"><span class="badge bg-success">Avg. Score 8.5</span></div>
-          </div>
-        </div>
+    <spline-viewer url="https://prod.spline.design/bI1ZJlWRWi6YwMfC/scene.splinecode"></spline-viewer>
 
-        <!-- Category Card 2 -->
-        <div class="col-md-4">
-          <div class="eco-card-hover bg-white rounded-3xl p-5 text-center h-100">
-            <div
-              class="w-16 h-16 bg-emerald-100 rounded-2xl mx-auto mb-4 d-flex align-items-center justify-content-center">
-              <i class="fas fa-recycle text-2xl text-emerald-600"></i>
-            </div>
-            <h3 class="font-bold text-lg mb-2">Zero Waste</h3>
-            <p class="text-gray-600">Reusable, biodegradable, and plastic-free alternatives</p>
-            <div class="mt-3"><span class="badge bg-success">Avg. Score 9.1</span></div>
-          </div>
-        </div>
+    <!-- Scripts -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
 
-        <!-- Category Card 3 -->
-        <div class="col-md-4">
-          <div class="eco-card-hover bg-white rounded-3xl p-5 text-center h-100">
-            <div
-              class="w-16 h-16 bg-emerald-100 rounded-2xl mx-auto mb-4 d-flex align-items-center justify-content-center">
-              <i class="fas fa-spa text-2xl text-emerald-600"></i>
-            </div>
-            <h3 class="font-bold text-lg mb-2">Natural Beauty</h3>
-            <p class="text-gray-600">Clean, cruelty-free, and sustainable personal care</p>
-            <div class="mt-3"><span class="badge bg-success">Avg. Score 8.9</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-<!-- do  not change+ -->
-    <div class="container">
-      <h2 class="text-success mt-4">Search Result</h2>
-      <div id="search-injected" class="product-grid"></div>
-    </div>
+    <script>
+        // Initialize Vanta.js background
+        VANTA.BIRDS({
+            el: "#vanta-background",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            backgroundColor: 0x000000,
+            color1: 0x4CAF50,
+            color2: 0x45a049,
+            birdSize: 0.8,
+            wingSpan: 20
+        });
 
+        // Splash screen timeout
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const textElements = document.querySelectorAll('.splash-text');
+            
+            // Animate text elements sequentially
+            textElements.forEach((el, index) => {
+                el.style.animation = `textFadeIn 1s ease-out ${index * 0.3}s forwards, 
+                                    textGlow 2s ease-in-out infinite`;
+            });
 
-    <h2>Eco-Friendly Products</h2>
-    <div id="eco-products" class="product-grid"></div>
-
-    <h2 class="mt-5">Other Products</h2>
-    <div id="other-products" class="product-grid"></div>
-  </div>
-<!--  -->
-
-
-  <!-- External JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 5000);
+        });
+    </script>
 </body>
-
-</html>
+</html> 
